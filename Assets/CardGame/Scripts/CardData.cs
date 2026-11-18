@@ -19,9 +19,14 @@ namespace CardGame
     {
         public string cardName = "New Card";
         public CardType type = CardType.Servant;
+        [Tooltip("Optional family/colour, e.g. Fire or Grass (taken from the sprite name by the importer).")]
+        public string element;
         [TextArea] public string description;
 
-        [Tooltip("Optional picture. If empty, the art box is filled with Art Color.")]
+        [Tooltip("Optional full card frame (your *_Base sprite). Replaces the default frame.")]
+        public Sprite baseSprite;
+
+        [Tooltip("Optional picture shown in the art window (your *_Art sprite). If empty, the art box is filled with Art Color.")]
         public Sprite artwork;
         public Color artColor = Color.white;
 

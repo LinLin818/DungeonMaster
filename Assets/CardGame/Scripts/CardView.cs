@@ -37,6 +37,11 @@ namespace CardGame
         public GameObject healthBox;
         public Image artImage;
 
+        [Tooltip("Image on the Front object (the frame). Found automatically if left empty.")]
+        public Image frameImage;
+        [Tooltip("Dark panel inside the frame (Front/Face). Hidden when the card has its own Base sprite. Found automatically if left empty.")]
+        public Image faceBackground;
+
         [Header("Back")]
         public GameObject back;
 
@@ -69,6 +74,12 @@ namespace CardGame
         Canvas onTopCanvas;
         Color healthDefaultColor = Color.white;
 
+        // default frame look, restored for cards that have no Base sprite
+        bool defaultsSaved;
+        Sprite defaultFrameSprite;
+        Image.Type defaultFrameType;
+        Color defaultFrameColor;
+
         // ---------------------------------------------------------------- setup
 
         public void Setup(CardInstance card, bool faceUp, Action<CardView> clickHandler)
@@ -77,6 +88,7 @@ namespace CardGame
             card.view = this;
             onClick = clickHandler;
             if (healthText) healthDefaultColor = healthText.color;
+            SaveFrameDefaults();
             if (selectedGlow) selectedGlow.SetActive(false);
             SetFaceUp(faceUp);
             Refresh();
@@ -109,7 +121,44 @@ namespace CardGame
             {
                 artImage.sprite = d.artwork;
                 artImage.color = d.artwork ? Color.white : d.artColor;
+                artImage.type = d.artwork ? Image.Type.Simple : defaultFrameType;
+                artImage.preserveAspect = d.artwork != null;
+                // A card with only a Base sprite (picture already drawn on it) needs no art box.
+                artImage.enabled = d.artwork != null || d.baseSprite == null;
             }
+
+            // Your own card frame (the *_Base sprite) replaces the default frame and dark panel.
+            bool customFrame = d.baseSprite != null;
+            if (frameImage)
+            {
+                frameImage.sprite = customFrame ? d.baseSprite : defaultFrameSprite;
+                frameImage.type = customFrame ? Image.Type.Simple : defaultFrameType;
+                frameImage.color = customFrame ? Color.white : defaultFrameColor;
+                frameImage.preserveAspect = customFrame;
+            }
+            if (faceBackground) faceBackground.enabled = !customFrame;
+        }
+
+        void SaveFrameDefaults()
+        {
+            if (defaultsSaved) return;
+            defaultsSaved = true;
+
+            // Works with prefabs made before these fields existed.
+            if (frameImage == null && front != null) frameImage = front.GetComponent<Image>();
+            if (faceBackground == null && front != null)
+            {
+                Transform face = front.transform.Find("Face");
+                if (face != null) faceBackground = face.GetComponent<Image>();
+            }
+
+            if (frameImage)
+            {
+                defaultFrameSprite = frameImage.sprite;
+                defaultFrameType = frameImage.type;
+                defaultFrameColor = frameImage.color;
+            }
+            else defaultFrameType = Image.Type.Sliced;
         }
 
         /// <summary>Greys out cards you can't afford.</summary>
