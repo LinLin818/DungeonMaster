@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Kaedrun
   type: 0
   element: Fire
-  description: 
+  description: "On summon: deal 1 damage to the lane enemy."
   baseSprite: {fileID: 8468936325430676526, guid: 0b052ab230b531746b32e7cfe50a393e, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}

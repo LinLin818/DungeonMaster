@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Water Sprite
   type: 0
   element: Water
-  description: 
+  description: "No ability. \"Still waters run deep.\""
   baseSprite: {fileID: 5052352920341582220, guid: 21c83e06306ec1943b9fe1e461f7192a, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
+  cost: 1
+  attack: 1
   health: 2

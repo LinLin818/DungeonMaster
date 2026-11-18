@@ -42,6 +42,10 @@ namespace CardGame
         [Tooltip("Dark panel inside the frame (Front/Face). Hidden when the card has its own Base sprite. Found automatically if left empty.")]
         public Image faceBackground;
 
+        [Header("Stat numbers")]
+        [Tooltip("Number sprites for cost / ATK / HP (Card_StatNumbers_Sheet). Loaded from Resources/CardStatNumbers if empty.")]
+        public CardStatNumbers statNumbers;
+
         [Header("Back")]
         public GameObject back;
 
@@ -80,6 +84,14 @@ namespace CardGame
         Image.Type defaultFrameType;
         Color defaultFrameColor;
 
+        // Number sprites drawn onto the card art. Positions are the top-left of a 16x10 sheet cell,
+        // in pixels of the 82x120 *_Base art (y down), measured from the art: mana orb, HP strip, ATK strip.
+        static readonly Vector2 CostCell = new Vector2(5f, 9f);
+        static readonly Vector2 HealthCell = new Vector2(61f, 89f);
+        static readonly Vector2 AttackCell = new Vector2(61f, 106f);
+        static readonly Vector2 DigitCellSize = new Vector2(16f, 10f);
+        Image costDigits, attackDigits, healthDigits;
+
         // ---------------------------------------------------------------- setup
 
         public void Setup(CardInstance card, bool faceUp, Action<CardView> clickHandler)
@@ -108,13 +120,13 @@ namespace CardGame
             CardData d = Card.data;
             if (nameText) nameText.text = d.cardName;
             if (costText) costText.text = d.cost.ToString();
-            if (typeText) typeText.text = d.type == CardType.Trap ? "TRAP" : "SERVANT";
+            if (typeText) typeText.text = d.type == CardType.Trap ? "TRAP" : d.type == CardType.Spell ? "MAGIC" : "SERVANT";
             if (attackText) attackText.text = Card.attack.ToString();
             if (healthBox) healthBox.SetActive(d.type == CardType.Servant);
             if (healthText)
             {
                 healthText.text = Card.health.ToString();
-                healthText.color = Card.health < d.health ? new Color(1f, 0.35f, 0.35f) : healthDefaultColor;
+                healthText.color = Card.health < Card.maxHealth ? new Color(1f, 0.35f, 0.35f) : healthDefaultColor;
             }
             if (descriptionText) descriptionText.text = d.description;
             if (artImage)
@@ -137,6 +149,92 @@ namespace CardGame
                 frameImage.preserveAspect = customFrame;
             }
             if (faceBackground) faceBackground.enabled = !customFrame;
+
+            // The *_Base art already has the name, the "SERVANT" plate and the effect text drawn on it.
+            if (nameText) nameText.gameObject.SetActive(!customFrame);
+            if (typeText) typeText.gameObject.SetActive(!customFrame);
+            if (descriptionText) descriptionText.gameObject.SetActive(!customFrame);
+
+            RefreshStatDigits(d, customFrame);
+        }
+
+        /// <summary>
+        /// On cards with their own *_Base art, cost / ATK / HP are drawn with the number sprites in the
+        /// boxes printed on the art, and the old placeholder circles are hidden.
+        /// Damaged HP is red, buffed ATK/HP is green.
+        /// </summary>
+        void RefreshStatDigits(CardData d, bool customFrame)
+        {
+            if (statNumbers == null) statNumbers = CardStatNumbers.Default;
+            bool useDigits = customFrame && frameImage != null && frameImage.sprite != null && statNumbers != null;
+            bool servant = d.type == CardType.Servant;
+
+            SetCircleVisible(costText, !useDigits);
+            SetCircleVisible(attackText, !useDigits);
+            if (healthBox) healthBox.SetActive(servant && !useDigits);
+
+            if (!useDigits)
+            {
+                ShowDigit(ref costDigits, null, CostCell);
+                ShowDigit(ref attackDigits, null, AttackCell);
+                ShowDigit(ref healthDigits, null, HealthCell);
+                return;
+            }
+
+            CardStatNumbers n = statNumbers;
+            Sprite[] atkSet = Card.attack > d.attack ? n.attackBuffed : n.attack;
+            // Red while hurt (below its current max), green while above its printed HP (Bloom, OVERGROW...).
+            Sprite[] hpSet = Card.health < Card.maxHealth ? n.healthDamaged : (Card.health > d.health ? n.healthBuffed : n.health);
+
+            ShowDigit(ref costDigits, CardStatNumbers.Pick(n.cost, d.cost), CostCell);
+            ShowDigit(ref attackDigits, servant ? CardStatNumbers.Pick(atkSet, Card.attack) : null, AttackCell);
+            ShowDigit(ref healthDigits, servant ? CardStatNumbers.Pick(hpSet, Mathf.Max(0, Card.health)) : null, HealthCell);
+        }
+
+        /// <summary>Hides/shows the placeholder circle a stat text sits in (e.g. "Cost", "Attack").</summary>
+        void SetCircleVisible(TMP_Text text, bool on)
+        {
+            if (text == null) return;
+            Transform circle = text.transform.parent;
+            if (circle == null || circle == transform || circle == visual || (front && circle == front.transform)) return;
+            circle.gameObject.SetActive(on);
+        }
+
+        /// <summary>Shows a number sprite at a cell position on the card art (hidden when sprite is null).</summary>
+        void ShowDigit(ref Image img, Sprite sprite, Vector2 cellTopLeft)
+        {
+            if (sprite == null)
+            {
+                if (img) img.enabled = false;
+                return;
+            }
+
+            if (img == null)
+            {
+                var go = new GameObject("StatDigit", typeof(RectTransform), typeof(Image));
+                go.transform.SetParent(frameImage.transform, false);
+                img = go.GetComponent<Image>();
+                img.raycastTarget = false;
+                img.preserveAspect = false;
+            }
+            img.transform.SetAsLastSibling(); // draw above the art and its children
+            img.sprite = sprite;
+            img.enabled = true;
+
+            // Where the (aspect-preserved) art is actually drawn inside the frame's rect.
+            RectTransform frameRt = frameImage.rectTransform;
+            Rect r = frameRt.rect;
+            Vector2 artSize = frameImage.sprite.rect.size;
+            float scale = Mathf.Min(r.width / artSize.x, r.height / artSize.y);
+            Vector2 artTopLeft = r.center + new Vector2(-artSize.x, artSize.y) * (0.5f * scale);
+
+            var rt = img.rectTransform;
+            rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
+            rt.pivot = new Vector2(0f, 1f);
+            rt.sizeDelta = DigitCellSize * scale;
+            rt.localScale = Vector3.one;
+            // anchoredPosition is measured from the anchor (centre of the parent rect)
+            rt.anchoredPosition = artTopLeft + new Vector2(cellTopLeft.x, -cellTopLeft.y) * scale - r.center;
         }
 
         void SaveFrameDefaults()

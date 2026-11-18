@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Lochness
   type: 0
   element: Water
-  description: 
+  description: "On summon: TORRENT all enemies."
   baseSprite: {fileID: -7262860385003726617, guid: 578ae271fd42263448b9cf0549b5d585, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
-  health: 2
+  cost: 5
+  attack: 4
+  health: 6

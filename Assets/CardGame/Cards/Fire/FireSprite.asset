@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Fire Sprite
   type: 0
   element: Fire
-  description: 
+  description: "No ability. \"A spark with a temper.\""
   baseSprite: {fileID: -7625279355461230283, guid: 7f5841fd7df744d42a552f261ce26003, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
+  cost: 1
   attack: 2
-  health: 2
+  health: 1

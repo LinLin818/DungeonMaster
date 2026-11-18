@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Grass Sprite
   type: 0
   element: Grass
-  description: 
+  description: "No ability. \"Small seed, deep roots.\""
   baseSprite: {fileID: -5724582146619644360, guid: 9ff70d656409ac642823e49aabc3230f, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
+  cost: 1
+  attack: 1
   health: 2

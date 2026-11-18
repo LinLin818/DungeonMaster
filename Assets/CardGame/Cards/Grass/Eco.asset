@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Eco
   type: 0
   element: Grass
-  description: 
+  description: "On summon: your servants get +1 ATK and +1 HP."
   baseSprite: {fileID: -574155388510906164, guid: e3b73816ff4d8a74386aaec661efdc3f, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
-  health: 2
+  cost: 5
+  attack: 4
+  health: 6

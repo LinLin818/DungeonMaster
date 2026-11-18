@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: School Of Fish
   type: 0
   element: Water
-  description: 
+  description: "Moves lanes for 0 mana."
   baseSprite: {fileID: -7574678317187887464, guid: b324209e71405294e98e62d1d051b269, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
-  health: 2
+  cost: 1
+  attack: 0
+  health: 3

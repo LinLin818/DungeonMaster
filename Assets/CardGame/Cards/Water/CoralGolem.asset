@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Coral Golem
   type: 0
   element: Water
-  description: 
+  description: "Takes 1 less damage in battle."
   baseSprite: {fileID: -7076098343005223117, guid: d2ff39408c21271489d9c5d17b664771, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
+  cost: 3
   attack: 2
-  health: 2
+  health: 5

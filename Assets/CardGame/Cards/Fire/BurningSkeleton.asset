@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Burning Skeleton
   type: 0
   element: Fire
-  description: 
+  description: "When slain: deal 1 damage to the lane enemy."
   baseSprite: {fileID: 2853665893696090057, guid: 6423e64239e7a5a4d802d273ff670826, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
+  cost: 1
+  attack: 1
   health: 2

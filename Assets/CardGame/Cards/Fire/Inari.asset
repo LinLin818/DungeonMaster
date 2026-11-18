@@ -15,10 +15,12 @@ MonoBehaviour:
   cardName: Inari
   type: 0
   element: Fire
-  description: 
+  description: "BLAZE"
   baseSprite: {fileID: -1563319832306546905, guid: 7a86ebcb632185d4d86f1b330cf0be14, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
-  health: 2
+  cost: 1
+  attack: 1
+  health: 1
+  blaze: 1
+  overgrow: 0

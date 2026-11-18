@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Magma Brute
   type: 0
   element: Fire
-  description: 
+  description: "No ability. \"Hits like a landslide.\""
   baseSprite: {fileID: -3272714220287307132, guid: c29aa0706aa58e1469e092474ca122a3, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
-  health: 2
+  cost: 3
+  attack: 4
+  health: 3

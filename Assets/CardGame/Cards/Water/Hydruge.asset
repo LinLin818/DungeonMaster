@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Hydruge
   type: 0
   element: Water
-  description: 
+  description: "On summon: TORRENT the lane enemy."
   baseSprite: {fileID: -8417032834224629915, guid: 906136448ae55dc46929ca446fb6677e, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
   cost: 2
-  attack: 2
-  health: 2
+  attack: 1
+  health: 3

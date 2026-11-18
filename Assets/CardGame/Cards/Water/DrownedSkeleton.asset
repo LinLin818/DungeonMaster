@@ -15,10 +15,10 @@ MonoBehaviour:
   cardName: Drowned Skeleton
   type: 0
   element: Water
-  description: 
+  description: "When slain: TORRENT the lane enemy."
   baseSprite: {fileID: 4891086929635847582, guid: 1d52dec6ecf43c240bc8257e363e962e, type: 3}
   artwork: {fileID: 0}
   artColor: {r: 1, g: 1, b: 1, a: 1}
-  cost: 2
-  attack: 2
+  cost: 1
+  attack: 1
   health: 2
