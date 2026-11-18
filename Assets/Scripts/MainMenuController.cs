@@ -9,8 +9,4 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene(gameSceneName);
     }
-    public void PlayCardGame()
-{
-    UnityEngine.SceneManagement.SceneManager.LoadScene("CardGame");
-}
 }
