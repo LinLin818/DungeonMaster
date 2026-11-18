@@ -1,12 +1,75 @@
 fileFormatVersion: 2
 guid: 1d9ad80a78519384fa685cdbd7a00967
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 938555762120789340
+    second: Counter_HP_0
+  - first:
+      213: 429840656146029
+    second: Counter_HP_1
+  - first:
+      213: 113045836819320009
+    second: Counter_HP_2
+  - first:
+      213: 168655242911648549
+    second: Counter_HP_3
+  - first:
+      213: 554114893940049863
+    second: Counter_HP_4
+  - first:
+      213: 831869161572501700
+    second: Counter_HP_5
+  - first:
+      213: 86986900905706488
+    second: Counter_HP_6
+  - first:
+      213: 1110448514197063671
+    second: Counter_HP_7
+  - first:
+      213: 748920138218240055
+    second: Counter_HP_8
+  - first:
+      213: 221328116717333345
+    second: Counter_HP_9
+  - first:
+      213: 461327742172320942
+    second: Counter_HP_10
+  - first:
+      213: 1146862957359528737
+    second: Counter_HP_11
+  - first:
+      213: 309077914390590936
+    second: Counter_HP_12
+  - first:
+      213: 873395388277005462
+    second: Counter_HP_13
+  - first:
+      213: 579089278169785673
+    second: Counter_HP_14
+  - first:
+      213: 743385062926208953
+    second: Counter_HP_15
+  - first:
+      213: 461314677646660212
+    second: Counter_HP_16
+  - first:
+      213: 1114776467909760915
+    second: Counter_HP_17
+  - first:
+      213: 1126027496852399647
+    second: Counter_HP_18
+  - first:
+      213: 89523863342857311
+    second: Counter_HP_19
+  - first:
+      213: 999537401003154140
+    second: Counter_HP_20
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -34,29 +97,29 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationMethod: 0
   spriteTessellationDetail: -1
   spriteGeometrySubdivision: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -74,7 +137,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -87,7 +150,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,7 +163,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,7 +173,469 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Counter_HP_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 28
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d066b7e331b0d5c78003e2dac82396a3
+      internalID: 938555762120789340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 28
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00186f0139e9e6d8c6e7f6328e553352
+      internalID: 429840656146029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_2
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 28
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1919e96f2f3ccc90c1c94dc250636242
+      internalID: 113045836819320009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_3
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 28
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2572f0cc3418b256670c25bebab3b6a6
+      internalID: 168655242911648549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_4
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 28
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b09c8f6a0cc7c73afc21d379fc12b77
+      internalID: 554114893940049863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_5
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 28
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8b6498532188c4da1a75ce9404ab63a
+      internalID: 831869161572501700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_6
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 28
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1350a202098c3f84ae847acab586ea3e
+      internalID: 86986900905706488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_7
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 15
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f691b0a4e1387f7fa8be53bc1eb0707d
+      internalID: 1110448514197063671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_8
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 15
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a64b2e5d3a278372334c3720c1fda872
+      internalID: 748920138218240055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_9
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 15
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31250bfdfbe2b615d0468cfc2c485adf
+      internalID: 221328116717333345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_10
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 15
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 666f7232536d4aefbca6385217da1326
+      internalID: 461327742172320942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_11
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 15
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fea79c88b77fb217750fafeda20ff9ab
+      internalID: 1146862957359528737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_12
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 15
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44a10b9bf2b75d84ae4022752fa5e62f
+      internalID: 309077914390590936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_13
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 15
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1eec7a6ab71c9652a2c8e8410da0a37
+      internalID: 873395388277005462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_14
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80956a15e8c25491013aa1a8bc876544
+      internalID: 579089278169785673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_15
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 2
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5108c6af0c4fb937e6a3e7a1a43dff4
+      internalID: 743385062926208953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_16
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 2
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 666eb4152cd92745b05dbe4ed78d7688
+      internalID: 461314677646660212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_17
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 2
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f787b4a8db9d793fbc2e225068eb9754
+      internalID: 1114776467909760915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_18
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 2
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa0740add35a61f86d8a53f591afd014
+      internalID: 1126027496852399647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_19
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 2
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13e0d7ab978bc5f5b7894113153b5439
+      internalID: 89523863342857311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Counter_HP_20
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 2
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddf11f86e829adc8fc7848cc6edf057f
+      internalID: 999537401003154140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -124,7 +649,28 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Counter_HP_0: 938555762120789340
+      Counter_HP_1: 429840656146029
+      Counter_HP_2: 113045836819320009
+      Counter_HP_3: 168655242911648549
+      Counter_HP_4: 554114893940049863
+      Counter_HP_5: 831869161572501700
+      Counter_HP_6: 86986900905706488
+      Counter_HP_7: 1110448514197063671
+      Counter_HP_8: 748920138218240055
+      Counter_HP_9: 221328116717333345
+      Counter_HP_10: 461327742172320942
+      Counter_HP_11: 1146862957359528737
+      Counter_HP_12: 309077914390590936
+      Counter_HP_13: 873395388277005462
+      Counter_HP_14: 579089278169785673
+      Counter_HP_15: 743385062926208953
+      Counter_HP_16: 461314677646660212
+      Counter_HP_17: 1114776467909760915
+      Counter_HP_18: 1126027496852399647
+      Counter_HP_19: 89523863342857311
+      Counter_HP_20: 999537401003154140
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

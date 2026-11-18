@@ -18,6 +18,9 @@ namespace CardGame
         [Tooltip("Glow shown when the selected card can be placed here.")]
         public GameObject highlight;
 
+        [Tooltip("Size of a card sitting in this slot (1 = same size as in your hand).")]
+        public float cardScale = 1f;
+
         /// <summary>The card sitting in this slot, or null.</summary>
         public CardInstance Occupant { get; set; }
         public bool IsEmpty => Occupant == null;
@@ -37,7 +40,7 @@ namespace CardGame
             rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
             rt.pivot = new Vector2(0.5f, 0.5f);
             rt.anchoredPosition = Vector2.zero;
-            rt.localScale = Vector3.one;
+            rt.localScale = Vector3.one * cardScale;
             Occupant = view.Card;
         }
 

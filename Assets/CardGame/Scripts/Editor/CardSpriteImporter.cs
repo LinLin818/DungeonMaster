@@ -33,6 +33,7 @@ namespace CardGame.EditorTools
             public string id;
             public Sprite baseSprite;
             public Sprite art;
+            public bool isTrap; // sprite lives in a ".../Traps/" folder
         }
 
         [MenuItem("Tools/Card Game/Create Cards From Selected Sprites")]
@@ -60,6 +61,8 @@ namespace CardGame.EditorTools
                 string id = m.Groups[2].Value.Trim('_', ' ', '-');
                 string key = element + "/" + id;
                 if (!pairs.TryGetValue(key, out Pair p)) pairs[key] = p = new Pair { element = element, id = id };
+                if (AssetDatabase.GetAssetPath(s).Replace('\\', '/').IndexOf("/Traps/", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                    p.isTrap = true;
 
                 if (m.Groups[3].Value.ToLowerInvariant() == "base") p.baseSprite = s;
                 else p.art = s;
@@ -89,7 +92,7 @@ namespace CardGame.EditorTools
                 {
                     card = ScriptableObject.CreateInstance<CardData>();
                     card.cardName = SplitCamelCase(p.id);
-                    card.type = CardType.Servant;
+                    card.type = p.isTrap ? CardType.Trap : CardType.Servant;
                     card.cost = 2;
                     card.attack = 2;
                     card.health = 2;
@@ -108,7 +111,7 @@ namespace CardGame.EditorTools
 
             // ---- add them to the GameManager in the open scene
             string poolNote = "Open the CardGame scene and run this again to add them to the deck.";
-            GameManager gm = Object.FindFirstObjectByType<GameManager>();
+            GameManager gm = Object.FindAnyObjectByType<GameManager>();
             if (gm != null)
             {
                 int choice = EditorUtility.DisplayDialogComplex("Card Game",
@@ -131,7 +134,7 @@ namespace CardGame.EditorTools
             string skippedNote = skipped.Count > 0 ? $"\n\nSkipped {skipped.Count} sprite(s) with other names, e.g. {skipped[0]}." : "";
             EditorUtility.DisplayDialog("Card Game",
                 $"Cards saved in {CardsRoot}/<Element>/.\n{poolNote}\n\n" +
-                "New cards start as Servants with Cost 2 / Attack 2 / Health 2. Select each card to set its real stats." +
+                "New cards start with Cost 2 / Attack 2 / Health 2 (Servants, or Traps if they came from a Traps folder). Select each card to set its real stats." +
                 skippedNote, "OK");
 
             if (created.Count > 0)

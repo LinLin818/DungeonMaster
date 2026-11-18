@@ -79,6 +79,23 @@ namespace CardGame
             RefreshStack();
         }
 
+        /// <summary>Removes and returns every card in the pile (used to reshuffle the grave into the deck).</summary>
+        public List<CardInstance> TakeAll()
+        {
+            var all = new List<CardInstance>(cards);
+            cards.Clear();
+            RefreshStack();
+            return all;
+        }
+
+        /// <summary>Adds cards to the pile and shuffles it.</summary>
+        public void AddAndShuffle(IEnumerable<CardInstance> newCards)
+        {
+            cards.AddRange(newCards);
+            Shuffle();
+            RefreshStack();
+        }
+
         public void Clear()
         {
             cards.Clear();
