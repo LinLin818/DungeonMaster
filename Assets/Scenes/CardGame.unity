@@ -8665,16 +8665,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.GameManager
   cardPool:
-  - {fileID: 11400000, guid: 70a8955260bb640f08b12d68c9a9e210, type: 2}
-  - {fileID: 11400000, guid: 51fb30302ce5f4c9c9c47aff8072e4e9, type: 2}
-  - {fileID: 11400000, guid: c9b4e7939de0e4be790c6c2b2f7ec7f0, type: 2}
-  - {fileID: 11400000, guid: 5e38381a4ed234f858e7f90eabe83421, type: 2}
-  - {fileID: 11400000, guid: 35d653a1783014b18b6a17b9a6310fb2, type: 2}
-  - {fileID: 11400000, guid: bf6fcf1e97fac49fdb890a701f5fab6b, type: 2}
-  - {fileID: 11400000, guid: 38f963f8c3d7a42e09a8c3cdbd07233e, type: 2}
-  - {fileID: 11400000, guid: bbc433ed332334cde86a2416505932e8, type: 2}
-  - {fileID: 11400000, guid: 03fe1ae8abd11462aa4c41534bee6c0f, type: 2}
-  - {fileID: 11400000, guid: 3188e7765dbc04100ab632fdb6957e14, type: 2}
+  - {fileID: 11400000, guid: 294740a06c54b43e99af797c09a95822, type: 2}
+  - {fileID: 11400000, guid: 16abc6264ebff4c73842ca4dc6b7a7c0, type: 2}
+  - {fileID: 11400000, guid: aa4f28f3a2be540049f701800bdc648e, type: 2}
+  - {fileID: 11400000, guid: fe0d8648975664cdbb8f04c266912f28, type: 2}
+  - {fileID: 11400000, guid: 51c4bd60ee70e4f9791e6f2ef3fb326d, type: 2}
+  - {fileID: 11400000, guid: b0547eed27da643729d7b4be47529c83, type: 2}
+  - {fileID: 11400000, guid: c7e4ad3a1d36e455e818c091b42255dc, type: 2}
+  - {fileID: 11400000, guid: 7492bb815ee8145c0a9b4dca40a51aae, type: 2}
+  - {fileID: 11400000, guid: 936d908de49424dc489bb05bced10ccc, type: 2}
+  - {fileID: 11400000, guid: 5ac2c3172957546a0b9c7da23ff30165, type: 2}
+  - {fileID: 11400000, guid: 0e709296a718f47cd9829e3d38b336a7, type: 2}
+  - {fileID: 11400000, guid: b6223a591f5d9484288d26bd81622bac, type: 2}
+  - {fileID: 11400000, guid: deb47b8b6833e4be9b392d563322cc04, type: 2}
+  - {fileID: 11400000, guid: 7572aaa03185e4b889f95008aa458de6, type: 2}
+  - {fileID: 11400000, guid: 8b398114c6f8c48c9a1d9dc929cc99ba, type: 2}
   copiesPerCard: 2
   cardPrefab: {fileID: 894062132928224083, guid: 4f437b2816fca44f0982f289025129bf, type: 3}
   playerDeck: {fileID: 1548602654}
