@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b92492bc352f43129a51731773c1fef, type: 3}
-  m_Name: Dragon
+  m_Name: Hydruge
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.CardData
-  cardName: Dragon
+  cardName: Hydruge
   type: 0
-  description: Rules the dungeon.
+  element: Water
+  description: 
+  baseSprite: {fileID: -8417032834224629915, guid: 906136448ae55dc46929ca446fb6677e, type: 3}
   artwork: {fileID: 0}
-  artColor: {r: 0.9411765, g: 0.58431375, b: 0.58431375, a: 1}
-  cost: 5
-  attack: 6
-  health: 5
+  artColor: {r: 1, g: 1, b: 1, a: 1}
+  cost: 2
+  attack: 2
+  health: 2

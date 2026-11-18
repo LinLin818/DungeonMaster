@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b92492bc352f43129a51731773c1fef, type: 3}
-  m_Name: Archer
+  m_Name: Inari
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.CardData
-  cardName: Archer
+  cardName: Inari
   type: 0
-  description: Steady ranged damage.
+  element: Fire
+  description: 
+  baseSprite: {fileID: -1563319832306546905, guid: 7a86ebcb632185d4d86f1b330cf0be14, type: 3}
   artwork: {fileID: 0}
-  artColor: {r: 0.62352943, g: 0.88235295, b: 0.79607844, a: 1}
+  artColor: {r: 1, g: 1, b: 1, a: 1}
   cost: 2
   attack: 2
   health: 2

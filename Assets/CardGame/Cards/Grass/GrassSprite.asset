@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b92492bc352f43129a51731773c1fef, type: 3}
-  m_Name: Fire Rune
+  m_Name: GrassSprite
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.CardData
-  cardName: Fire Rune
-  type: 1
-  description: Deals 3 to a servant entering this lane.
+  cardName: Grass Sprite
+  type: 0
+  element: Grass
+  description: 
+  baseSprite: {fileID: -5724582146619644360, guid: 9ff70d656409ac642823e49aabc3230f, type: 3}
   artwork: {fileID: 0}
-  artColor: {r: 0.9411765, g: 0.6, b: 0.48235294, a: 1}
+  artColor: {r: 1, g: 1, b: 1, a: 1}
   cost: 2
-  attack: 3
-  health: 1
+  attack: 2
+  health: 2

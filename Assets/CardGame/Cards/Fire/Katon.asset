@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b92492bc352f43129a51731773c1fef, type: 3}
-  m_Name: Poison Snare
+  m_Name: Katon
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.CardData
-  cardName: Poison Snare
-  type: 1
-  description: Deals 4 to a servant entering this lane.
+  cardName: Katon
+  type: 0
+  element: Fire
+  description: 
+  baseSprite: {fileID: 1911059215821779264, guid: 163f654f527326a4fb092a71392e620d, type: 3}
   artwork: {fileID: 0}
-  artColor: {r: 0.3647059, g: 0.7921569, b: 0.64705884, a: 1}
-  cost: 3
-  attack: 4
-  health: 1
+  artColor: {r: 1, g: 1, b: 1, a: 1}
+  cost: 2
+  attack: 2
+  health: 2

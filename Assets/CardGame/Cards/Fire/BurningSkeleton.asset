@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b92492bc352f43129a51731773c1fef, type: 3}
-  m_Name: Stone Golem
+  m_Name: BurningSkeleton
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.CardData
-  cardName: Stone Golem
+  cardName: Burning Skeleton
   type: 0
-  description: A wall that walks.
+  element: Fire
+  description: 
+  baseSprite: {fileID: 2853665893696090057, guid: 6423e64239e7a5a4d802d273ff670826, type: 3}
   artwork: {fileID: 0}
-  artColor: {r: 0.98039216, g: 0.78039217, b: 0.45882353, a: 1}
-  cost: 4
-  attack: 3
-  health: 6
+  artColor: {r: 1, g: 1, b: 1, a: 1}
+  cost: 2
+  attack: 2
+  health: 2

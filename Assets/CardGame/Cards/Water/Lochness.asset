@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b92492bc352f43129a51731773c1fef, type: 3}
-  m_Name: Skeleton
+  m_Name: Lochness
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.CardData
-  cardName: Skeleton
+  cardName: Lochness
   type: 0
-  description: Rattles but holds the line.
+  element: Water
+  description: 
+  baseSprite: {fileID: -7262860385003726617, guid: 578ae271fd42263448b9cf0549b5d585, type: 3}
   artwork: {fileID: 0}
-  artColor: {r: 0.827451, g: 0.81960785, b: 0.78039217, a: 1}
-  cost: 1
-  attack: 1
+  artColor: {r: 1, g: 1, b: 1, a: 1}
+  cost: 2
+  attack: 2
   health: 2

@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b92492bc352f43129a51731773c1fef, type: 3}
-  m_Name: Dark Mage
+  m_Name: DrownedSkeleton
   m_EditorClassIdentifier: Assembly-CSharp::CardGame.CardData
-  cardName: Dark Mage
+  cardName: Drowned Skeleton
   type: 0
-  description: Glass cannon.
+  element: Water
+  description: 
+  baseSprite: {fileID: 4891086929635847582, guid: 1d52dec6ecf43c240bc8257e363e962e, type: 3}
   artwork: {fileID: 0}
-  artColor: {r: 0.95686275, g: 0.7529412, b: 0.81960785, a: 1}
-  cost: 3
-  attack: 4
+  artColor: {r: 1, g: 1, b: 1, a: 1}
+  cost: 2
+  attack: 2
   health: 2
