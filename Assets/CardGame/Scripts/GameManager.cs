@@ -113,6 +113,8 @@ namespace CardGame
         BoardSlot spellSourceSlot;      // Riptide: the enemy servant picked, waiting for a destination lane
         readonly List<CardView> castViews = new List<CardView>(); // spells shown mid-board / flying to the grave
         bool attackCancelled;           // set by attack traps
+        BoardSlot choosingAllyFor;      // Fern: the servant whose "give an ally OVERGROW" is waiting for your click
+        BoardSlot chosenAllySlot;
 
         // ================================================================ lifecycle
 
@@ -146,6 +148,7 @@ namespace CardGame
             enemyHand.Clear();
             selected = null;
             spellSourceSlot = null;
+            choosingAllyFor = chosenAllySlot = null;
             playerHealth = enemyHealth = startingHealth;
             mana = enemyManaLeft = 0;
             playerTurns = enemyTurns = 0;
@@ -434,6 +437,7 @@ namespace CardGame
 
         void OnCardClicked(CardView view)
         {
+            if (choosingAllyFor != null) { if (!view.InHand) OnAllyChoiceClicked(SlotOf(view.Card)); return; }
             if (busy || gameOver || !playerTurnActive) return;
 
             if (view.InHand) { OnHandCardClicked(view); return; }
@@ -501,7 +505,8 @@ namespace CardGame
             BoardSlot from = SlotOf(c);
             string why = WhyCantAttack(c, true);
             if (why == null) enemyServantSlots[from.lane].SetHighlight(true);
-            bool canMove = mana >= moveCost && !c.cannotMoveThisTurn;
+            int cost = MoveCostOf(c);
+            bool canMove = mana >= cost && !c.cannotMoveThisTurn;
             if (canMove)
                 foreach (BoardSlot s in playerServantSlots)
                     if (s != from) s.SetHighlight(true);
@@ -510,7 +515,7 @@ namespace CardGame
                 ? "Click the glowing enemy slot or the enemy portrait to attack."
                 : $"It can't attack: {why}.";
             string movePart = c.cannotMoveThisTurn ? "It's entangled and can't move."
-                : mana >= moveCost ? $"Click another servant slot to move it ({moveCost} mana)."
+                : mana >= cost ? $"Click another servant slot to move it ({(cost == 0 ? "free" : cost + " mana")})."
                 : "No mana left to move it.";
             Log($"{c.data.cardName} ({c.attack}/{c.health}){Statuses(c)}. {attackPart} {movePart}");
         }
@@ -556,6 +561,7 @@ namespace CardGame
 
         void OnSlotClicked(BoardSlot slot)
         {
+            if (choosingAllyFor != null) { OnAllyChoiceClicked(slot); return; }
             if (busy || gameOver || !playerTurnActive) return;
             if (selected == null) { Log("Select a card in your hand or one of your servants first."); return; }
 
@@ -646,13 +652,16 @@ namespace CardGame
         void TryPlayerMove(BoardSlot from, BoardSlot to)
         {
             CardInstance a = from.Occupant, b = to.Occupant;
-            if (mana < moveCost) { Log($"Moving a servant costs {moveCost} mana."); return; }
+            if (mana < MoveCostOf(a)) { Log($"Moving {a.data.cardName} costs {MoveCostOf(a)} mana."); return; }
             if (a.cannotMoveThisTurn) { Log($"{a.data.cardName} is entangled and can't move this turn."); return; }
             if (b != null && b.cannotMoveThisTurn) { Log($"{b.data.cardName} is entangled and can't be swapped this turn."); return; }
             StartCoroutine(PlayerMoveRoutine(from, to));
         }
 
-        /// <summary>Your move: pay 1 mana; if 'to' holds a servant they swap. Both count as moved.</summary>
+        /// <summary>Mana to move this servant: moveCost, or 0 for "Moves lanes for 0 mana" (School of Fish).</summary>
+        int MoveCostOf(CardInstance c) => c != null && c.data.freeMove ? 0 : moveCost;
+
+        /// <summary>Your move: pay the mover's cost; if 'to' holds a servant they swap. Both count as moved.</summary>
         IEnumerator PlayerMoveRoutine(BoardSlot from, BoardSlot to)
         {
             busy = true;
@@ -660,7 +669,7 @@ namespace CardGame
 
             CardInstance a = from.Occupant;
             CardInstance b = to.Occupant;
-            mana -= moveCost;
+            mana -= MoveCostOf(a);
             MoveServant(from, to);
             a.movedThisTurn = true;
             if (b != null) b.movedThisTurn = true;
@@ -912,11 +921,15 @@ namespace CardGame
 
         // ================================================================ summoning and traps
 
-        /// <summary>A servant just entered the board: OVERGROW grows, then the opposing summon trap may fire.</summary>
+        /// <summary>
+        /// A servant just entered the board: OVERGROW grows, its "On summon" ability goes off,
+        /// then the opposing summon trap in that lane may fire.
+        /// </summary>
         IEnumerator OnServantSummoned(BoardSlot slot, bool byPlayer)
         {
             CardInstance s = slot.Occupant;
             if (s == null) yield break;
+            if (s.view) while (s.view.IsAnimating) yield return null; // let it land first
 
             if (s.hasOvergrow)
             {
@@ -926,8 +939,151 @@ namespace CardGame
             if (s.HasBlazeNow && !FirstTurnNoAttack(byPlayer))
                 Log($"{s.data.cardName} has BLAZE: it can attack right away.");
 
-            yield return SummonTraps(slot, byPlayer);
+            CardData d = s.data;
+            if (d.onSummon != ServantAbility.None)
+            {
+                if (d.onSummon == ServantAbility.GiveAllyOvergrow && byPlayer)
+                    yield return PlayerChooseAllyForOvergrow(slot);
+                else
+                    UseAbility(d.onSummon, d.onSummonAmount, s, slot.lane, byPlayer, "On summon");
+                ResolveDeaths();
+                RefreshUI();
+                yield return new WaitForSeconds(0.6f);
+            }
+
+            if (slot.Occupant == s) yield return SummonTraps(slot, byPlayer);
             ResolveDeaths();
+        }
+
+        // ================================================================ servant abilities
+
+        /// <summary>
+        /// Applies a servant ability right away. 'lane' and 'ownerIsPlayer' describe where the servant is (or was,
+        /// for "When slain"). GiveAllyOvergrow picks the sturdiest ally here (the enemy's pick; you choose yours).
+        /// </summary>
+        void UseAbility(ServantAbility ability, int amount, CardInstance source, int lane, bool ownerIsPlayer, string when)
+        {
+            BoardSlot[] mine = ownerIsPlayer ? playerServantSlots : enemyServantSlots;
+            BoardSlot[] theirs = ownerIsPlayer ? enemyServantSlots : playerServantSlots;
+            CardInstance laneEnemy = theirs[lane].Occupant;
+            string name = source.data.cardName;
+
+            switch (ability)
+            {
+                case ServantAbility.DamageLaneEnemy:
+                    if (laneEnemy == null) { Log($"{when}: {name} has no lane enemy to hit."); break; }
+                    int dealt = DealDamage(laneEnemy, amount);
+                    PulseView(laneEnemy);
+                    Log(dealt > 0 ? $"{when}: {name} deals {dealt} damage to {laneEnemy.data.cardName}."
+                                  : $"{when}: {name} fires, but {laneEnemy.data.cardName}'s shield blocks it.");
+                    break;
+
+                case ServantAbility.TorrentLaneEnemy:
+                    if (laneEnemy == null) { Log($"{when}: {name} has no lane enemy to TORRENT."); break; }
+                    laneEnemy.torrentPending = true;
+                    PulseView(laneEnemy);
+                    Log($"{when}: {name} hits {laneEnemy.data.cardName} with TORRENT. It can't attack on its next turn.");
+                    break;
+
+                case ServantAbility.TorrentAllEnemies:
+                {
+                    int n = 0;
+                    foreach (BoardSlot s in theirs)
+                        if (s.Occupant != null) { s.Occupant.torrentPending = true; PulseView(s.Occupant); n++; }
+                    Log(n == 0 ? $"{when}: {name}'s TORRENT finds no enemies."
+                               : $"{when}: {name} hits {n} enem{(n == 1 ? "y" : "ies")} with TORRENT. They can't attack on their next turn.");
+                    break;
+                }
+                case ServantAbility.HealAllies:
+                {
+                    int healed = 0;
+                    foreach (BoardSlot s in mine)
+                    {
+                        CardInstance c = s.Occupant;
+                        if (c == null || c == source) continue;
+                        int h = c.Heal(amount);
+                        if (h > 0) { healed += h; PulseView(c); }
+                        if (c.view) c.view.Refresh();
+                    }
+                    Log(healed == 0 ? $"{when}: {name} has no hurt allies to heal." : $"{when}: {name} heals its allies for {healed} HP.");
+                    break;
+                }
+                case ServantAbility.BuffAllies:
+                {
+                    int n = 0;
+                    foreach (BoardSlot s in mine)
+                    {
+                        CardInstance c = s.Occupant;
+                        if (c == null || c == source) continue;
+                        c.attack += amount;
+                        c.GainHealth(amount);
+                        if (c.view) c.view.Refresh();
+                        PulseView(c);
+                        n++;
+                    }
+                    Log(n == 0 ? $"{when}: {name} has no allies to empower."
+                               : $"{when}: {name} gives {n} all{(n == 1 ? "y" : "ies")} +{amount} ATK and +{amount} HP.");
+                    break;
+                }
+                case ServantAbility.GiveAllyOvergrow:
+                {
+                    BoardSlot pick = Best(mine, c => c == source || c.hasOvergrow ? -1 : c.attack + c.health);
+                    if (pick == null) { Log($"{when}: {name} has no ally to give OVERGROW."); break; }
+                    GiveOvergrow(pick.Occupant, name, when);
+                    break;
+                }
+            }
+            RefreshUI();
+        }
+
+        void GiveOvergrow(CardInstance ally, string sourceName, string when)
+        {
+            ally.hasOvergrow = true;
+            PulseView(ally);
+            Log($"{when}: {sourceName} gives {ally.data.cardName} OVERGROW (+1 HP at the start of each of its owner's turns).");
+        }
+
+        /// <summary>Fern (yours): highlight your other servants and wait for you to click one.</summary>
+        IEnumerator PlayerChooseAllyForOvergrow(BoardSlot sourceSlot)
+        {
+            CardInstance source = sourceSlot.Occupant;
+            var options = new List<BoardSlot>();
+            foreach (BoardSlot s in playerServantSlots)
+                if (s != sourceSlot && s.Occupant != null && s.Occupant.view != null) options.Add(s);
+
+            if (options.Count == 0) { Log($"On summon: {source.data.cardName} has no ally to give OVERGROW."); yield break; }
+
+            BoardSlot chosen;
+            if (options.Count == 1) chosen = options[0];
+            else
+            {
+                chosenAllySlot = null;
+                choosingAllyFor = sourceSlot;
+                foreach (BoardSlot s in options) s.SetHighlight(true);
+                Log($"{source.data.cardName}: click one of your glowing servants to give it OVERGROW.");
+                while (chosenAllySlot == null) yield return null;
+                chosen = chosenAllySlot;
+                choosingAllyFor = null;
+                chosenAllySlot = null;
+                foreach (BoardSlot s in AllSlots()) s.SetHighlight(false);
+            }
+            GiveOvergrow(chosen.Occupant, source.data.cardName, "On summon");
+            RefreshUI();
+        }
+
+        void OnAllyChoiceClicked(BoardSlot slot)
+        {
+            if (slot == null || !slot.isPlayerSide || slot.kind != CardType.Servant || slot == choosingAllyFor || slot.Occupant == null)
+            {
+                Log("Click one of your glowing servants to give it OVERGROW.");
+                return;
+            }
+            chosenAllySlot = slot;
+        }
+
+        void PulseView(CardInstance c)
+        {
+            if (c != null && c.view != null && c.view.isActiveAndEnabled) c.view.StartCoroutine(c.view.Pulse());
         }
 
         IEnumerator SummonTraps(BoardSlot servantSlot, bool servantIsPlayer)
@@ -1044,8 +1200,8 @@ namespace CardGame
             {
                 yield return a.view.AttackNudge(b.view.visual.position);
                 // Both deal damage at the same time; the defending player takes none.
-                int toB = DealDamage(b, a.attack);
-                int toA = DealDamage(a, b.attack);
+                int toB = DealDamage(b, a.attack, inBattle: true);
+                int toA = DealDamage(a, b.attack, inBattle: true);
                 Log($"{b.data.cardName} blocks {a.data.cardName}: {a.data.cardName} takes {toA}, {b.data.cardName} takes {toB}.");
                 ResolveDeaths();
             }
@@ -1061,10 +1217,15 @@ namespace CardGame
             yield return new WaitForSeconds(attackPause);
         }
 
-        /// <summary>Damages a servant, unless a Bubble Shield soaks it. Returns the damage actually taken.</summary>
-        int DealDamage(CardInstance c, int amount)
+        /// <summary>
+        /// Damages a servant. In battle, its Battle Damage Reduction (Coral Golem) applies first;
+        /// then a Bubble Shield soaks whatever is left. Returns the damage actually taken.
+        /// </summary>
+        int DealDamage(CardInstance c, int amount, bool inBattle = false)
         {
-            if (c == null || amount <= 0) return 0;
+            if (c == null) return 0;
+            if (inBattle) amount -= c.data.battleDamageReduction;
+            if (amount <= 0) return 0;
             if (c.shielded)
             {
                 c.shielded = false;
@@ -1075,12 +1236,27 @@ namespace CardGame
             return amount;
         }
 
-        /// <summary>Sends every servant at 0 HP to its owner's graveyard.</summary>
+        /// <summary>
+        /// Sends every servant at 0 HP to its owner's graveyard and fires their "When slain" abilities.
+        /// Servants that die together leave together, so a "lane enemy" that died at the same time isn't hit.
+        /// Repeats while abilities keep killing things.
+        /// </summary>
         void ResolveDeaths()
         {
-            foreach (BoardSlot s in AllServantSlots())
-                if (s.Occupant != null && s.Occupant.IsDead)
-                    SendToGrave(s, s.isPlayerSide ? playerGrave : enemyGrave);
+            for (int round = 0; round < 10; round++)
+            {
+                var dead = new List<(BoardSlot slot, CardInstance card)>();
+                foreach (BoardSlot s in AllServantSlots())
+                    if (s.Occupant != null && s.Occupant.IsDead) dead.Add((s, s.Occupant));
+                if (dead.Count == 0) return;
+
+                foreach (var (slot, card) in dead)
+                    SendToGrave(slot, slot.isPlayerSide ? playerGrave : enemyGrave);
+
+                foreach (var (slot, card) in dead)
+                    if (card.data.whenSlain != ServantAbility.None)
+                        UseAbility(card.data.whenSlain, card.data.whenSlainAmount, card, slot.lane, slot.isPlayerSide, "When slain");
+            }
         }
 
         void SendToGrave(BoardSlot slot, DeckPile grave)
@@ -1252,7 +1428,9 @@ namespace CardGame
                 if (a == null || a.view == null || WhyCantAttack(a, false) != null) continue;
 
                 CardInstance b = playerServantSlots[lane].Occupant;
-                bool badTrade = b != null && !a.shielded && b.attack >= a.health && (b.shielded || b.health > a.attack);
+                int toA = b != null ? b.attack - a.data.battleDamageReduction : 0;
+                int toB = b != null ? a.attack - b.data.battleDamageReduction : 0;
+                bool badTrade = b != null && !a.shielded && toA >= a.health && (b.shielded || b.health > toB);
                 if (badTrade) continue;
 
                 Log($"Enemy {a.data.cardName} attacks your {LaneNames[lane]} lane!");

@@ -22,3 +22,9 @@ MonoBehaviour:
   cost: 1
   attack: 2
   health: 1
+  onSummon: 0
+  onSummonAmount: 0
+  whenSlain: 0
+  whenSlainAmount: 0
+  freeMove: 0
+  battleDamageReduction: 0

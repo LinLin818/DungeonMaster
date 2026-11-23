@@ -24,3 +24,9 @@ MonoBehaviour:
   health: 4
   blaze: 1
   overgrow: 0
+  onSummon: 1
+  onSummonAmount: 2
+  whenSlain: 0
+  whenSlainAmount: 0
+  freeMove: 0
+  battleDamageReduction: 0

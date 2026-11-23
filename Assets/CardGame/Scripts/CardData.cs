@@ -51,6 +51,27 @@ namespace CardGame
     }
 
     /// <summary>
+    /// A servant's triggered ability (used for "On summon" and "When slain"). Amount sets the number.
+    /// "Lane enemy" is the enemy servant straight across, in the same lane.
+    /// </summary>
+    public enum ServantAbility
+    {
+        None,
+        /// <summary>Deal Amount damage to the lane enemy. (Kaedrun, Katon, Burning Skeleton)</summary>
+        DamageLaneEnemy,
+        /// <summary>TORRENT the lane enemy. (Hydruge, Drowned Skeleton)</summary>
+        TorrentLaneEnemy,
+        /// <summary>TORRENT every enemy servant. (Lochness)</summary>
+        TorrentAllEnemies,
+        /// <summary>Heal your other servants Amount HP. (Overgrown Skeleton)</summary>
+        HealAllies,
+        /// <summary>Your other servants get +Amount ATK and +Amount HP. (Eco)</summary>
+        BuffAllies,
+        /// <summary>Give one of your other servants OVERGROW (you pick it). (Fern)</summary>
+        GiveAllyOvergrow
+    }
+
+    /// <summary>
     /// One card design, stored as an asset.
     /// Create new cards with: Right-click in Project > Create > Card Game > Card
     /// </summary>
@@ -83,6 +104,18 @@ namespace CardGame
         public bool blaze;
         [Tooltip("OVERGROW: gains +1 HP at the start of each of your turns, including the turn it is summoned.")]
         public bool overgrow;
+
+        [Header("Servant abilities")]
+        [Tooltip("Happens when this servant is summoned.")]
+        public ServantAbility onSummon = ServantAbility.None;
+        [Min(0)] public int onSummonAmount;
+        [Tooltip("Happens when this servant is destroyed, however it dies.")]
+        public ServantAbility whenSlain = ServantAbility.None;
+        [Min(0)] public int whenSlainAmount;
+        [Tooltip("Moves lanes for 0 mana.")]
+        public bool freeMove;
+        [Tooltip("Takes this much less damage in battle (attacking or blocking). Spells and traps are not reduced.")]
+        [Min(0)] public int battleDamageReduction;
 
         [Header("Spell / trap")]
         public CardEffect effect = CardEffect.None;
